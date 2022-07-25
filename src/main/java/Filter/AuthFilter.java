@@ -23,20 +23,23 @@ public class AuthFilter implements Filter {
 		// TODO Auto-generated method stub
 		HttpServletRequest req = (HttpServletRequest) request;
 		HttpServletResponse resp = (HttpServletResponse) response;
-		
+
 		String servletPath = req.getServletPath();
-		
-		if(servletPath.startsWith(UrlConst.ASSETS) || servletPath.startsWith(UrlConst.AUTH_LOGIN))
+
+		if (servletPath.startsWith(UrlConst.ASSETS) || servletPath.startsWith(UrlConst.AUTH_LOGIN)) {
 			chain.doFilter(request, response);
-		else {
-			String status = String.valueOf(req.getSession().getAttribute("status"));
-			System.out.println("STATUS: " + status);
-			if(status.equals("null"))
-				resp.sendRedirect(req.getContextPath() + UrlConst.AUTH_LOGIN);
-			else
-				chain.doFilter(request, response);
+			return;
 		}
-		
+
+		String status = String.valueOf(req.getSession().getAttribute("status"));
+		System.out.println("STATUS: " + status);
+		if (status == null) {
+			resp.sendRedirect(req.getContextPath() + UrlConst.AUTH_LOGIN);
+			return;
+		}
+
+		chain.doFilter(request, response);
+
 	}
-	
+
 }

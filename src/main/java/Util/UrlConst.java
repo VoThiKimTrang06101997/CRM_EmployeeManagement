@@ -21,6 +21,7 @@ public class UrlConst {
 	public static final String PROJECT_MANAGE = "/projects";
 	public static final String PROJECT_ADD = "/project/add";
 	public static final String PROJECT_UPDATE = "/project/update";
+	public static final String PROJECT_EDIT = "/project/edit";
 	public static final String PROJECT_DELETE = "/project/delete";
 	public static final String PROJECT_STAFF = "/project/staff";
 	public static final String PROJECT_STAFF_ADD = "/project/staff/add";
