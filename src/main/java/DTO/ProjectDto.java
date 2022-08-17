@@ -24,6 +24,7 @@ public class ProjectDto {
 		this.owner = owner;
 	}
 	
+
 	/* getter and setter */
 	public int getId() {
 		return id;

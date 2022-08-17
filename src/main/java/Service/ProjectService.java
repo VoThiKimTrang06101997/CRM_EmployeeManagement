@@ -34,26 +34,38 @@ public class ProjectService {
 			
 		}
 		
-		return dtos;
-		
-		
-//		Iterator<ProjectDto> project = dtos.iterator();
-//		while(project.hasNext()) {
-//			ProjectDto projectDto = new ProjectDto();
-//			projectDto.setId(((ProjectDto) project).getId());
-//			projectDto.setName(project.getName());
-//			projectDto.setDescription(project.getDescription());
-//			projectDto.setStart_date(project.getStart_date());
-//			projectDto.setEnd_date(project.getEnd_date());
-//			projectDto.setOwner(project.getOwner());
-//
-//			
-//			dtos.add(projectDto);
-//		} 
-//		project.remove();
-        
-		
+		return dtos;	
 	}
 	
+	public void insert(ProjectDto projectDto) {
+		ProjectDto entity = new ProjectDto();
+		
+		// entity.setId(projectDto.getId());
+		entity.setName(projectDto.getName());
+		entity.setDescription(projectDto.getDescription());
+		entity.setStart_date(projectDto.getStart_date());
+		entity.setEnd_date(projectDto.getEnd_date());
+		entity.setOwner(projectDto.getOwner());
+		try {
+			projectRepository.add(projectDto);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		};	
+	}
+
+	public void update(ProjectDto projectDto) throws SQLException {
+		ProjectDto entity = projectRepository.findById(projectDto.getId());
+		
+		if(entity != null) {
+			entity.setId(projectDto.getId());
+			entity.setName(projectDto.getName());
+			entity.setDescription(projectDto.getDescription());
+			entity.setStart_date(projectDto.getStart_date());
+			entity.setEnd_date(projectDto.getEnd_date());
+			entity.setOwner(projectDto.getOwner());
+		}
+		projectRepository.add(entity);
+	}
 
 }

@@ -60,10 +60,10 @@ public class ProjectServlet extends HttpServlet {
 			
 			break;
 		case UrlConst.PROJECT_ADD:
-			
+			getProjectAdd(req,resp);
 			break;
 		case UrlConst.PROJECT_UPDATE:
-			
+			getProjectUpdate(req,resp);
 			break;
 		case UrlConst.PROJECT_DELETE:
 			
@@ -86,14 +86,10 @@ public class ProjectServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		// HttpSession session = req.getSession();
-		// UserCreateDto dto = (UserCreateDto) session.getAttribute("USER_LOGIN");
-		// String name = req.getParameter("name");
-		
-		// String startDate = req.getParameter("start_date");
-		// String endDate = req.getParameter("end_date");
-		// int id = Integer.parseInt(req.getParameter("id"));
-		// int owner = dto.getRoleId();
+		 HttpSession session = req.getSession();
+		 UserCreateDto dto = (UserCreateDto) session.getAttribute("USER_LOGIN");
+		 
+		String action = req.getServletPath();
 		
 		switch (req.getServletPath()) {
 		case UrlConst.PROJECT_DASHBOARD:
@@ -103,10 +99,10 @@ public class ProjectServlet extends HttpServlet {
 			
 			break;
 		case UrlConst.PROJECT_ADD:
-			
+			postProjectAdd(req,resp);
 			break;
 		case UrlConst.PROJECT_UPDATE:
-			
+			postProjectUpdate(req,resp);
 			break;
 		case UrlConst.PROJECT_DELETE:
 			
@@ -126,6 +122,54 @@ public class ProjectServlet extends HttpServlet {
 		}
 	}
 	
+	private void postProjectUpdate(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		ProjectDto projectDto = extractDtoFromReq(req);
+		
+		// int id =Integer.parseInt(req.getParameter("id")); 
+		
+		try {
+			projectService.update(projectDto);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		resp.sendRedirect(req.getContextPath() + UrlConst.PROJECT_DASHBOARD);
+		
+	}
+
+	private void getProjectUpdate(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		req.getRequestDispatcher(JspConst.PROJECT_UPDATE).forward(req, resp);	
+	}
+
+	private void postProjectAdd(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		ProjectDto projectDto = extractDtoFromReq(req);
+
+		projectService.insert(projectDto);
+		resp.sendRedirect(req.getContextPath() + UrlConst.PROJECT_DASHBOARD);
+	}
+
+	private ProjectDto extractDtoFromReq(HttpServletRequest req) {
+		// int id = Integer.parseInt(req.getParameter("id"));
+		String name = req.getParameter("name");
+		String description = req.getParameter("description");
+		String startDate = req.getParameter("start_date");
+		String endDate = req.getParameter("end_date");
+		int owner = Integer.parseInt(req.getParameter("owner"));
+		return new ProjectDto(0, name, description, Date.valueOf(startDate), Date.valueOf(endDate), owner);
+	}
+	
+	private void getProjectAdd(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		ProjectDto projectDto;
+//		if(!projectService.insert(projectDto)) {
+//			req.setAttribute("Message", "Thêm mới thất bại");
+//			req.getRequestDispatcher(JspConst.PROJECT_ADD).forward(req, resp);
+//		} else {
+//			resp.sendRedirect(req.getContextPath() + UrlConst.PROJECT_ADD);
+//		}
+		 req.getRequestDispatcher(JspConst.PROJECT_ADD).forward(req, resp);
+	}
+
 	private void getDashboard(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// List<ProjectDto> projects = projectService.getAll();
 		

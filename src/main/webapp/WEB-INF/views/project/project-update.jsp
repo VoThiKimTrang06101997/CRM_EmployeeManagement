@@ -1,13 +1,12 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@page import="Util.UrlConst"%>
-
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Add Project</title>
+<meta charset="ISO-8859-1">
+<title>Project Update</title>
 </head>
 <body>
 	<!-- Breadcrumb -->
@@ -20,11 +19,11 @@
 	                        <li class="breadcrumb-item"><a href="<c:url value="<%=UrlConst.HOME %>" />">Home</a></li>
 	                        <li class="breadcrumb-item"><a href="<c:url value="<%=UrlConst.PROJECT_DASHBOARD %>" />">Project</a></li>
 	                        <li class="breadcrumb-item active" aria-current="page">
-	                            Add New Project
+	                            Project Update
 	                        </li>
 	                    </ol>
 	                </nav>
-	                <h1 class="m-0">Add New Project</h1>
+	                <h1 class="m-0">Update New Project</h1>
 	            </div>
 	        </div>
 	    </div>
@@ -38,7 +37,7 @@
                     <p class="text-muted">There is no rule!</p>
                 </div>
                 <div class="col-lg-8 card-form__body card-body">
-                 	<form action="<c:url value="<%=UrlConst.PROJECT_ADD %>" />" method="post">
+                 	<form action="<c:url value="<%=UrlConst.PROJECT_UPDATE %>" />" method="post">
 						<div class="form-group">
 							<label for="id">Id:</label> <input type="text"
 								class="form-control" name="id" id="id">
@@ -64,7 +63,7 @@
 							<textarea type="text" class="form-control" name="owner"
 								id="owner" aria-label="With textarea"></textarea>
 						</div>
-                        <button class="btn btn-primary w-25 justify-content-center" type="submit" class="btn btn-primary">Add</button>
+                        <button class="btn btn-primary w-25 justify-content-center" type="submit" class="btn btn-primary">Update</button>
                     </form>
                 </div>
             </div>

@@ -113,7 +113,7 @@
 												<i class="material-icons">delete</i>
 											</a>
 											<a role="button" class="btn btn-success btn-sm"
-												href="${pageContext.request.contextPath}/project/edit?id=<%= dto.getId() %>">
+												href="${pageContext.request.contextPath}/project/update?id=<%= dto.getId() %>">
 												<i class="material-icons">create</i>
 											</a>
 										</div>
@@ -123,10 +123,7 @@
 					}
 					%>	
 						
-						
-						
-						
-							
+					
 						</tbody>
 					</table>
 				</div>
