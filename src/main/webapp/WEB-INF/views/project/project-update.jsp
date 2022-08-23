@@ -37,7 +37,7 @@
                     <p class="text-muted">There is no rule!</p>
                 </div>
                 <div class="col-lg-8 card-form__body card-body">
-                 	<form action="<c:url value="<%=UrlConst.PROJECT_UPDATE %>" />" method="post">
+                 	<form action="<c:url value="<%=UrlConst.PROJECT_UPDATE %>" />" method="post" id="formProject">
 						<div class="form-group">
 							<label for="id">Id:</label> <input type="text"
 								class="form-control" name="id" id="id">
@@ -63,7 +63,7 @@
 							<textarea type="text" class="form-control" name="owner"
 								id="owner" aria-label="With textarea"></textarea>
 						</div>
-                        <button class="btn btn-primary w-25 justify-content-center" type="submit" class="btn btn-primary">Update</button>
+                        <button class="btn btn-primary w-25 justify-content-center" type="submit" id="edit" class="btn btn-primary">Update</button>
                     </form>
                 </div>
             </div>

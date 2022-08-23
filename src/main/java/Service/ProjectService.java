@@ -18,10 +18,10 @@ public class ProjectService {
 	
 	public List<ProjectDto> getAll() {
 		List<ProjectDto> dtos = new ArrayList<ProjectDto>();
-		List<Project> entities = projectRepository.findAll();
+		List<ProjectDto> entities = projectRepository.findAll();
 		
 		
-		for (Project project : entities) {
+		for (ProjectDto project : entities) {
 			ProjectDto projectDto = new ProjectDto();
 			projectDto.setId(project.getId());
 			projectDto.setName(project.getName());

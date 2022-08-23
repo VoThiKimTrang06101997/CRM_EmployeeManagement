@@ -1,6 +1,7 @@
 package Servlet;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.util.List;
@@ -12,10 +13,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.google.gson.Gson;
+
 import DTO.ProjectDto;
 import DTO.UserCreateDto;
 import Model.Project;
 import Model.User;
+import Repository.ProjectRepository;
 import Service.ProjectService;
 import Util.JspConst;
 import Util.UrlConst;
@@ -34,6 +38,7 @@ import Util.UrlConst;
 
 public class ProjectServlet extends HttpServlet {
 	private ProjectService projectService;
+	private ProjectRepository projectRepository;
 	
 	@Override
 	public void init() throws ServletException {
@@ -122,10 +127,16 @@ public class ProjectServlet extends HttpServlet {
 		}
 	}
 	
-	private void postProjectUpdate(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		ProjectDto projectDto = extractDtoFromReq(req);
+	private ProjectDto postProjectUpdate(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		ProjectDto projectDto = new ProjectDto();
 		
-		// int id =Integer.parseInt(req.getParameter("id")); 
+		int id = Integer.parseInt(req.getParameter("id")); 
+		// String id = req.getParameter("id");
+		String name = req.getParameter("name");
+		String description = req.getParameter("description");
+		String startDate = req.getParameter("start_date");
+		String endDate = req.getParameter("end_date");
+		int owner = Integer.parseInt(req.getParameter("owner"));
 		
 		try {
 			projectService.update(projectDto);
@@ -133,11 +144,51 @@ public class ProjectServlet extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		resp.sendRedirect(req.getContextPath() + UrlConst.PROJECT_DASHBOARD);
+		
+		// Nếu có id => Cập nhật
+//		if(id != null && !id.isEmpty()) {
+//			projectDto.setId(Integer.parseInt(id));
+//			if(projectService.update(projectDto) > 0) {
+//				req.setAttribute("success", "Cập nhật thành công");
+//			} else {
+//				req.setAttribute("error", "Cập nhật thất bại");
+//			}
+//		}
+		
+		
+		// req.setAttribute("projects", projectService.getAll());
+		
+		 resp.sendRedirect(req.getContextPath() + UrlConst.PROJECT_DASHBOARD);
+		 return new ProjectDto(0, name, description, Date.valueOf(startDate), Date.valueOf(endDate), owner);
+		// req.getRequestDispatcher(JspConst.PROJECT_DASHBOARD).forward(req, resp);
+		// return new ProjectDto(); 
+		
 		
 	}
 
 	private void getProjectUpdate(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		String id = req.getParameter("id");
+		// int id = Integer.parseInt(req.getParameter("id"));
+		String action = req.getParameter("action");
+		
+		// Nếu có id => Cập nhật hoặc Delete
+		if(id != null && id.isEmpty()) {
+			if(action.equals("edit")) { // Cập nhật
+				PrintWriter writer = resp.getWriter();
+				resp.setContentType("application/json");
+				
+				Gson gson = new Gson();
+				ProjectDto model = projectRepository.findById(Integer.parseInt("id"));
+				
+				String objectToReturn = gson.toJson(model);
+				
+				writer.write(objectToReturn);    // Đưa Json trả về Ajax
+				writer.flush();
+				return;
+			} else { // Xóa
+				
+			}
+		}
 		req.getRequestDispatcher(JspConst.PROJECT_UPDATE).forward(req, resp);	
 	}
 

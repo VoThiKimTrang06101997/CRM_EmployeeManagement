@@ -108,11 +108,11 @@
 									<td>${ dto.createUserName }</td>
 									<td class="text-right">
 										<div class="btn-group btn-group-sm">
-											<a role="button" class="btn btn-danger btn-sm" 
+											<a role="button" class="btn btn-danger btn-project-delete" 
 												href="${pageContext.request.contextPath}/project/delete?id=<%= dto.getId() %>">
 												<i class="material-icons">delete</i>
 											</a>
-											<a role="button" class="btn btn-success btn-sm"
+											<a role="button" class="btn btn-success btn-project-edit" data-id="${ dto.id}"
 												href="${pageContext.request.contextPath}/project/update?id=<%= dto.getId() %>">
 												<i class="material-icons">create</i>
 											</a>
